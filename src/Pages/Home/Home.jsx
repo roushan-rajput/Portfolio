@@ -46,7 +46,7 @@ function Home() {
                 1800,
                 "React Developer",
                 1800,
-                "MERN Stack Developer",
+                "Django Developer",
                 1800,
                 "UI Designer",
                 1800,
@@ -59,8 +59,7 @@ function Home() {
             <p className="text-gray-400 leading-8 mt-8 max-w-xl">
               Passionate Full Stack Developer specializing in
               building fast, responsive and scalable web
-              applications using React, Node.js, Express,
-              MongoDB and Tailwind CSS.
+              applications using React and Tailwind CSS.
             </p>
 
             <div className="flex gap-5 mt-10">
