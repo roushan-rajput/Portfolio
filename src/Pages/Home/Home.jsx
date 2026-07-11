@@ -159,7 +159,7 @@ function Home() {
               <p className="text-gray-400 leading-8 mt-8">
 
                 I build modern websites and web applications
-                using the MERN Stack.
+                using the Full--Stack.
 
                 I enjoy designing attractive user interfaces,
                 writing clean code and solving real-world
