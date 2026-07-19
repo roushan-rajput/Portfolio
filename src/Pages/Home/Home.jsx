@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Particles from '../../components/Particles';
 // import profilePic from '../../assets/profile-pic.png';
 import profilePic from '../../assets/profilepic.png';
+import './Home.css';
 
 const ROLES = [
   'Fullstack Developer',
@@ -62,7 +63,7 @@ const PROJECTS = [
 const TIMELINE = [
   {
     year: '2024 — Present',
-    title: 'Fullstack Developer',
+    title: 'Fullstack Development',
     org: 'Freelance / Self-directed projects',
     detail:
       'Designing and shipping complete products — React frontends wired to Django APIs, deployed on Vercel with real users in mind.',
@@ -192,9 +193,7 @@ function Reveal({ children, delay = 0, className = '' }) {
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ease-out ${
-        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      } ${className}`}
+      className={`reveal ${visible ? 'is-visible' : ''} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
@@ -204,8 +203,8 @@ function Reveal({ children, delay = 0, className = '' }) {
 
 function SectionHeading({ index, title }) {
   return (
-    <h2 className="text-zinc-200 font-mono text-sm tracking-wide">
-      <span className="text-teal-300">{index}.</span> {title}
+    <h2 className="section-heading">
+      <span className="index">{index}.</span> {title}
     </h2>
   );
 }
@@ -234,31 +233,28 @@ function ProjectCard({ project, growCursor, shrinkCursor }) {
       onMouseLeave={handleLeave}
       onMouseEnter={growCursor}
       style={{ transform: `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)` }}
-      className="relative rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 transition-transform duration-200 ease-out hover:border-teal-300/60"
+      className="project-card"
     >
-      <span className="absolute -top-px -left-px w-6 h-6 border-t-2 border-l-2 border-teal-300 rounded-tl-lg" />
-      <span className="absolute -bottom-px -right-px w-6 h-6 border-b-2 border-r-2 border-amber-300 rounded-br-lg" />
+      <span className="corner-tl" />
+      <span className="corner-br" />
 
-      <p className="font-mono text-zinc-600 text-xs">{project.id}</p>
-      <h3 className="mt-2 text-zinc-100 text-lg font-semibold">{project.title}</h3>
-      <p className="mt-3 text-zinc-400 text-sm leading-relaxed">{project.description}</p>
+      <p className="project-id">{project.id}</p>
+      <h3 className="project-title">{project.title}</h3>
+      <p className="project-desc">{project.description}</p>
 
-      <ul className="mt-4 flex flex-wrap gap-2">
+      <ul className="project-stack">
         {project.stack.map((tech) => (
-          <li
-            key={tech}
-            className="font-mono text-[11px] text-teal-300 border border-teal-300/30 rounded-full px-2.5 py-1"
-          >
+          <li key={tech} className="project-tag">
             {tech}
           </li>
         ))}
       </ul>
 
-      <div className="mt-6 flex gap-4 font-mono text-sm">
-        <a href={project.live} className="text-amber-300 hover:underline">
+      <div className="project-links">
+        <a href={project.live} className="link-live">
           Live →
         </a>
-        <a href={project.repo} className="text-zinc-400 hover:text-zinc-100 hover:underline">
+        <a href={project.repo} className="link-code">
           Code →
         </a>
       </div>
@@ -309,8 +305,8 @@ function Home() {
     };
   }, []);
 
-  const growCursor = () => ringRef.current?.classList.add('w-14', 'h-14', 'border-teal-300', 'bg-teal-300/10');
-  const shrinkCursor = () => ringRef.current?.classList.remove('w-14', 'h-14', 'border-teal-300', 'bg-teal-300/10');
+  const growCursor = () => ringRef.current?.classList.add('is-active');
+  const shrinkCursor = () => ringRef.current?.classList.remove('is-active');
 
   // subtle 3D tilt on the hero photo frame as the mouse moves over it
   const handlePhotoTilt = (e) => {
@@ -345,43 +341,37 @@ function Home() {
   };
 
   return (
-    <div className="relative w-full bg-black cursor-none">
+    <div className="page">
       {/* custom cursor — fixed, follows scroll position on its own */}
-      <div
-        ref={dotRef}
-        className="pointer-events-none fixed top-0 left-0 z-[999] w-1.5 h-1.5 rounded-full bg-teal-300 shadow-[0_0_8px_theme(colors.teal.300)] -translate-x-1/2 -translate-y-1/2"
-      />
-      <div
-        ref={ringRef}
-        className="pointer-events-none fixed top-0 left-0 z-[999] w-9 h-9 rounded-full border border-amber-300/70 -translate-x-1/2 -translate-y-1/2 transition-[width,height,background-color,border-color] duration-150 ease-out"
-      />
+      <div ref={dotRef} className="cursor-dot" />
+      <div ref={ringRef} className="cursor-ring" />
 
       {/* sticky top nav for jumping between sections on this single page */}
-      <header className="sticky top-0 z-[500] bg-black/70 backdrop-blur-md border-b border-zinc-800">
-        <nav className="max-w-6xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between font-mono text-sm">
-          <a href="#top" onMouseEnter={growCursor} onMouseLeave={shrinkCursor} className="text-teal-300">
-            <span className="text-zinc-500">&lt;</span>RK<span className="text-zinc-500">/&gt;</span>
+      <header className="site-header">
+        <nav className="nav">
+          <a href="#top" onMouseEnter={growCursor} onMouseLeave={shrinkCursor} className="nav-logo">
+            <span className="bracket">&lt;</span>RK<span className="bracket">/&gt;</span>
           </a>
-          <div className="hidden sm:flex gap-8">
-            <a href="#about" onMouseEnter={growCursor} onMouseLeave={shrinkCursor} className="text-zinc-400 hover:text-amber-300 transition-colors">
-              <span className="text-zinc-600">// </span>about
+          <div className="nav-links">
+            <a href="#about" onMouseEnter={growCursor} onMouseLeave={shrinkCursor} className="nav-link">
+              <span className="prefix">// </span>about
             </a>
-            <a href="#skills" onMouseEnter={growCursor} onMouseLeave={shrinkCursor} className="text-zinc-400 hover:text-amber-300 transition-colors">
-              <span className="text-zinc-600">// </span>skills
+            <a href="#skills" onMouseEnter={growCursor} onMouseLeave={shrinkCursor} className="nav-link">
+              <span className="prefix">// </span>skills
             </a>
-            <a href="#work" onMouseEnter={growCursor} onMouseLeave={shrinkCursor} className="text-zinc-400 hover:text-amber-300 transition-colors">
-              <span className="text-zinc-600">// </span>work
+            <a href="#work" onMouseEnter={growCursor} onMouseLeave={shrinkCursor} className="nav-link">
+              <span className="prefix">// </span>work
             </a>
-            <a href="#contact" onMouseEnter={growCursor} onMouseLeave={shrinkCursor} className="text-zinc-400 hover:text-amber-300 transition-colors">
-              <span className="text-zinc-600">// </span>contact
+            <a href="#contact" onMouseEnter={growCursor} onMouseLeave={shrinkCursor} className="nav-link">
+              <span className="prefix">// </span>contact
             </a>
           </div>
         </nav>
       </header>
 
       {/* ================= HERO ================= */}
-      <section id="top" className="relative w-full min-h-[calc(100vh-64px)] overflow-hidden">
-        <div className="absolute inset-0">
+      <section id="top" className="hero">
+        <div className="hero-particles">
           <Particles
             particleColors={['#ffffff', '#3b82f6', '#a855f7']}
             particleCount={200}
@@ -393,86 +383,60 @@ function Home() {
           />
         </div>
 
-        <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center gap-14 min-h-[calc(100vh-64px)] px-6 lg:px-20">
+        <div className="hero-content">
           {/* left: name + role + bio */}
-          <div className="max-w-xl text-center lg:text-left">
-            <h1 className="text-zinc-100 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+          <div className="hero-text">
+            <h1 className="hero-name">
               {typedName}
-              {!nameDone && (
-                <span className="inline-block w-[3px] h-[0.85em] bg-teal-300 ml-1 align-[-0.08em] animate-pulse" />
-              )}
+              {!nameDone && <span className="blink-caret-teal" />}
             </h1>
 
-            <p className="mt-3 text-amber-300 font-mono text-sm sm:text-base min-h-[1.4em]">
-              <span className="text-zinc-500">// </span>
+            <p className="hero-role">
+              <span className="prefix">// </span>
               {roleText}
-              {nameDone && (
-                <span className="inline-block w-[2px] h-[1em] bg-amber-300 ml-1 align-middle animate-pulse" />
-              )}
+              {nameDone && <span className="blink-caret-amber" />}
             </p>
 
-            <p
-              className="mt-6 text-zinc-400 text-[15px] sm:text-base leading-relaxed opacity-0 animate-[fadeUp_0.7s_ease_forwards]"
-              style={{ animationDelay: '2.4s' }}
-            >
-              I build fast, reliable web products end to end — from pixel-perfect interfaces to
-              the APIs and databases running behind them. I care about clean code, thoughtful UX
-              and shipping things that actually solve real problems. When I&apos;m not coding, I&apos;m
-              usually learning something new, breaking something on purpose, or fixing something
-              I broke by accident.
+            <p className="hero-bio">
+              | Full stack Developer | Python | Django | React.js | MySQL | Restful API | JWT | CRUD | API Integration | Oops Concepts
             </p>
 
-            <div
-              className="mt-8 flex gap-4 justify-center lg:justify-start opacity-0 animate-[fadeUp_0.7s_ease_forwards]"
-              style={{ animationDelay: '2.65s' }}
-            >
-              <a
-                href="#work"
-                onMouseEnter={growCursor}
-                onMouseLeave={shrinkCursor}
-                className="px-6 py-3 rounded-lg bg-teal-300 text-black font-semibold font-mono text-sm hover:-translate-y-0.5 transition-transform"
-              >
+            <div className="hero-actions">
+              <a href="#work" onMouseEnter={growCursor} onMouseLeave={shrinkCursor} className="btn-primary">
                 View Work →
               </a>
-              <a
-                href="#contact"
-                onMouseEnter={growCursor}
-                onMouseLeave={shrinkCursor}
-                className="px-6 py-3 rounded-lg border border-zinc-700 text-zinc-200 font-mono text-sm hover:border-amber-300 hover:text-amber-300 hover:-translate-y-0.5 transition-all"
-              >
+              <a href="#contact" onMouseEnter={growCursor} onMouseLeave={shrinkCursor} className="btn-secondary">
                 Get In Touch
               </a>
             </div>
           </div>
 
           {/* right: photo */}
-          <div className="opacity-0 animate-[fadeUp_0.8s_ease_forwards]" style={{ animationDelay: '0.5s' }}>
+          <div className="hero-photo-wrap">
             <div
               ref={photoRef}
               onMouseMove={handlePhotoTilt}
               onMouseLeave={() => { resetPhotoTilt(); shrinkCursor(); }}
               onMouseEnter={growCursor}
-              className="relative w-[260px] sm:w-[300px] aspect-[3/3.6] rounded-2xl border border-zinc-700 overflow-hidden transition-transform duration-200 ease-out hover:border-teal-300/70"
+              className="hero-photo"
             >
-              <span className="absolute -top-px -left-px w-6 h-6 border-t-2 border-l-2 border-teal-300 rounded-tl-lg z-10" />
-              <span className="absolute -bottom-px -right-px w-6 h-6 border-b-2 border-r-2 border-amber-300 rounded-br-lg z-10" />
-              <img src={profilePic} alt="Roushan Rajput" className="w-full h-full object-cover" />
+              <span className="corner-tl" />
+              <span className="corner-br" />
+              <img src={profilePic} alt="Roushan Rajput" />
             </div>
           </div>
         </div>
       </section>
 
       {/* ================= ABOUT ================= */}
-      <section id="about" className="relative w-full py-24 border-t border-zinc-900">
-        <div className="max-w-5xl mx-auto px-6 lg:px-10">
+      <section id="about" className="section">
+        <div className="section-inner">
           <Reveal>
-            <p className="font-mono text-amber-300 text-sm">
-              <span className="text-zinc-500">// </span>about-me
+            <p className="eyebrow">
+              <span className="prefix">// </span>about-me
             </p>
-            <h2 className="mt-3 text-zinc-100 text-3xl sm:text-4xl font-extrabold tracking-tight">
-              The person behind the code
-            </h2>
-            <p className="mt-6 max-w-2xl text-zinc-400 text-[15px] sm:text-base leading-relaxed">
+            <h2 className="section-title">The person behind the code</h2>
+            <p className="section-desc">
               I&apos;m Roushan — a fullstack developer who likes taking an idea from a blank file
               to something people actually use. I split my time between React on the frontend
               and Python/Django on the backend, with a habit of poking at the database layer
@@ -480,15 +444,15 @@ function Home() {
             </p>
           </Reveal>
 
-          <Reveal delay={100} className="mt-14">
-            <div className="relative pl-6 border-l border-zinc-800">
+          <Reveal delay={100}>
+            <div className="timeline">
               {TIMELINE.map((entry) => (
-                <div key={entry.title} className="relative pb-10 last:pb-0">
-                  <span className="absolute -left-[29px] top-1 w-3 h-3 rounded-full bg-teal-300 shadow-[0_0_10px_theme(colors.teal.300)]" />
-                  <p className="font-mono text-amber-300 text-xs">{entry.year}</p>
-                  <h3 className="mt-1 text-zinc-100 font-semibold">{entry.title}</h3>
-                  <p className="text-zinc-500 text-sm font-mono">{entry.org}</p>
-                  <p className="mt-2 text-zinc-400 text-sm leading-relaxed max-w-xl">{entry.detail}</p>
+                <div key={entry.title} className="timeline-item">
+                  <span className="timeline-dot" />
+                  <p className="timeline-year">{entry.year}</p>
+                  <h3 className="timeline-title">{entry.title}</h3>
+                  <p className="timeline-org">{entry.org}</p>
+                  <p className="timeline-detail">{entry.detail}</p>
                 </div>
               ))}
             </div>
@@ -497,26 +461,22 @@ function Home() {
       </section>
 
       {/* ================= SKILLS ================= */}
-      <section id="skills" className="relative w-full py-24 border-t border-zinc-900">
-        <div className="max-w-5xl mx-auto px-6 lg:px-10">
+      <section id="skills" className="section">
+        <div className="section-inner">
           <Reveal>
             <SectionHeading index="01" title="Skills" />
           </Reveal>
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="skills-grid">
             {SKILL_GROUPS.map((group, i) => (
               <Reveal key={group.label} delay={i * 80}>
-                <div
-                  onMouseEnter={growCursor}
-                  onMouseLeave={shrinkCursor}
-                  className="relative rounded-xl border border-zinc-800 bg-zinc-900/40 p-5 hover:border-teal-300/60 transition-colors"
-                >
-                  <span className="absolute -top-px -left-px w-5 h-5 border-t-2 border-l-2 border-teal-300 rounded-tl-lg" />
-                  <span className="absolute -bottom-px -right-px w-5 h-5 border-b-2 border-r-2 border-amber-300 rounded-br-lg" />
-                  <h3 className="text-zinc-100 font-semibold text-sm">{group.label}</h3>
-                  <ul className="mt-3 space-y-1.5">
+                <div onMouseEnter={growCursor} onMouseLeave={shrinkCursor} className="skill-card">
+                  <span className="corner-tl small" />
+                  <span className="corner-br small" />
+                  <h3 className="skill-card-title">{group.label}</h3>
+                  <ul className="skill-list">
                     {group.items.map((item) => (
-                      <li key={item} className="text-zinc-400 text-sm font-mono">
-                        <span className="text-amber-300">›</span> {item}
+                      <li key={item} className="skill-item">
+                        <span className="arrow">›</span> {item}
                       </li>
                     ))}
                   </ul>
@@ -528,16 +488,16 @@ function Home() {
       </section>
 
       {/* ================= PROJECTS ================= */}
-      <section id="work" className="relative w-full py-24 border-t border-zinc-900">
-        <div className="max-w-5xl mx-auto px-6 lg:px-10">
+      <section id="work" className="section">
+        <div className="section-inner">
           <Reveal>
             <SectionHeading index="02" title="Selected work" />
-            <p className="mt-4 max-w-2xl text-zinc-400 text-[15px] sm:text-base leading-relaxed">
+            <p className="section-desc">
               A handful of projects that mattered enough to finish and polish.
             </p>
           </Reveal>
 
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="projects-grid">
             {PROJECTS.map((project, i) => (
               <Reveal key={project.id} delay={i * 80}>
                 <ProjectCard project={project} growCursor={growCursor} shrinkCursor={shrinkCursor} />
@@ -548,33 +508,29 @@ function Home() {
       </section>
 
       {/* ================= CONTACT ================= */}
-      <section id="contact" className="relative w-full py-24 border-t border-zinc-900">
-        <div className="max-w-5xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-14">
+      <section id="contact" className="section">
+        <div className="section-inner contact-grid">
           <Reveal>
-            <p className="font-mono text-amber-300 text-sm">
-              <span className="text-zinc-500">// </span>get-in-touch
+            <p className="eyebrow">
+              <span className="prefix">// </span>get-in-touch
             </p>
-            <h2 className="mt-3 text-zinc-100 text-3xl sm:text-4xl font-extrabold tracking-tight">
-              Let&apos;s build something
-            </h2>
-            <p className="mt-6 max-w-md text-zinc-400 text-[15px] sm:text-base leading-relaxed">
+            <h2 className="section-title">Let&apos;s build something</h2>
+            <p className="contact-desc">
               Have a project, a role, or just an idea worth talking through? My inbox is open —
               I usually reply within a day or two.
             </p>
 
-            <ul className="mt-10 space-y-4">
+            <ul className="social-list">
               {SOCIALS.map((social) => (
                 <li key={social.label}>
                   <a
                     href={social.href}
                     onMouseEnter={growCursor}
                     onMouseLeave={shrinkCursor}
-                    className="group flex items-baseline gap-3 font-mono text-sm"
+                    className="social-link"
                   >
-                    <span className="text-teal-300 w-20 shrink-0">{social.label}</span>
-                    <span className="text-zinc-500 group-hover:text-amber-300 transition-colors">
-                      {social.handle}
-                    </span>
+                    <span className="social-label">{social.label}</span>
+                    <span className="social-handle">{social.handle}</span>
                   </a>
                 </li>
               ))}
@@ -582,17 +538,12 @@ function Home() {
           </Reveal>
 
           <Reveal delay={120}>
-            <form
-              onSubmit={handleFormSubmit}
-              className="relative rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 sm:p-8 space-y-5"
-            >
-              <span className="absolute -top-px -left-px w-6 h-6 border-t-2 border-l-2 border-teal-300 rounded-tl-lg" />
-              <span className="absolute -bottom-px -right-px w-6 h-6 border-b-2 border-r-2 border-amber-300 rounded-br-lg" />
+            <form onSubmit={handleFormSubmit} className="contact-form">
+              <span className="corner-tl" />
+              <span className="corner-br" />
 
-              <div>
-                <label htmlFor="name" className="block font-mono text-xs text-zinc-500 mb-2">
-                  name
-                </label>
+              <div className="form-group">
+                <label htmlFor="name">name</label>
                 <input
                   id="name"
                   name="name"
@@ -601,14 +552,11 @@ function Home() {
                   type="text"
                   required
                   placeholder="Your name"
-                  className="w-full bg-black/60 border border-zinc-700 rounded-lg px-4 py-2.5 text-zinc-100 text-sm placeholder:text-zinc-600 focus:outline-none focus:border-teal-300 transition-colors"
                 />
               </div>
 
-              <div>
-                <label htmlFor="email" className="block font-mono text-xs text-zinc-500 mb-2">
-                  email
-                </label>
+              <div className="form-group">
+                <label htmlFor="email">email</label>
                 <input
                   id="email"
                   name="email"
@@ -617,14 +565,11 @@ function Home() {
                   type="email"
                   required
                   placeholder="you@example.com"
-                  className="w-full bg-black/60 border border-zinc-700 rounded-lg px-4 py-2.5 text-zinc-100 text-sm placeholder:text-zinc-600 focus:outline-none focus:border-teal-300 transition-colors"
                 />
               </div>
 
-              <div>
-                <label htmlFor="message" className="block font-mono text-xs text-zinc-500 mb-2">
-                  message
-                </label>
+              <div className="form-group">
+                <label htmlFor="message">message</label>
                 <textarea
                   id="message"
                   name="message"
@@ -633,7 +578,6 @@ function Home() {
                   required
                   rows={5}
                   placeholder="What are you building?"
-                  className="w-full bg-black/60 border border-zinc-700 rounded-lg px-4 py-2.5 text-zinc-100 text-sm placeholder:text-zinc-600 focus:outline-none focus:border-teal-300 transition-colors resize-none"
                 />
               </div>
 
@@ -642,18 +586,18 @@ function Home() {
                 disabled={status === 'sending'}
                 onMouseEnter={growCursor}
                 onMouseLeave={shrinkCursor}
-                className="w-full px-6 py-3 rounded-lg bg-teal-300 text-black font-semibold font-mono text-sm hover:-translate-y-0.5 transition-transform disabled:opacity-60 disabled:hover:translate-y-0"
+                className="submit-btn"
               >
                 {status === 'sending' ? 'Sending…' : 'Send message →'}
               </button>
 
               {status === 'sent' && (
-                <p className="font-mono text-teal-300 text-xs text-center">
+                <p className="form-status success">
                   Message sent — I&apos;ll get back to you soon.
                 </p>
               )}
               {status === 'error' && (
-                <p className="font-mono text-red-400 text-xs text-center">
+                <p className="form-status error">
                   Something went wrong — try again or email me directly.
                 </p>
               )}
@@ -663,16 +607,9 @@ function Home() {
       </section>
 
       {/* footer */}
-      <footer className="border-t border-zinc-900 py-8 text-center font-mono text-xs text-zinc-600">
+      <footer className="site-footer">
         © {new Date().getFullYear()} Roushan Kumar — built with React & Tailwind
       </footer>
-
-      <style>{`
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </div>
   );
 }
