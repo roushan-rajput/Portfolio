@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import Particles from '../../components/Particles';
-// import profilePic from '../../assets/profile-pic.png';
 import profilePic from '../../assets/profilepic.png';
 import './Home.css';
 
@@ -16,36 +15,36 @@ const NAME = 'Roushan Kumar';
 
 const SKILL_GROUPS = [
   { label: 'Frontend', items: ['React', 'JavaScript (ES6+)', 'Tailwind CSS', 'HTML5 / CSS3'] },
-  { label: 'Backend', items: ['Python', 'Django', 'REST APIs', 'Node.js'] },
-  { label: 'Data', items: ['PostgreSQL', 'MySQL', 'MongoDB'] },
-  { label: 'Tooling', items: ['Git & GitHub', 'Vercel', 'Docker', 'Postman'] },
+  { label: 'Backend', items: ['Python', 'Django', 'REST APIs'] },
+  { label: 'Data', items: ['MySQL'] },
+  { label: 'Tooling', items: ['Git & GitHub', 'Vercel', 'Postman'] },
 ];
 
 const PROJECTS = [
   {
     id: '01',
-    title: 'Inventory & Billing System',
+    title: 'Corporate Management System',
     description:
-      'A Django + React tool for small retailers to track stock, generate invoices, and see sales trends without spreadsheets.',
-    stack: ['React', 'Django', 'PostgreSQL', 'Tailwind'],
+      'A Django + React tool for managing the corporate system and on the level of each departments.',
+    stack: ['React', 'Django', 'Tailwind','sql'],
     live: '#',
     repo: '#',
   },
   {
     id: '02',
-    title: 'Realtime Chat App',
+    title: 'Olx Pro',
     description:
-      'WebSocket-based chat with rooms, typing indicators, and message history, built to learn Django Channels properly.',
-    stack: ['React', 'Django Channels', 'Redis'],
+      'A Django + React tool for small retailers to track stock, generate invoices, and see sales trends without spreadsheets',
+    stack: ['React', 'Django Channels'],
     live: '#',
     repo: '#',
   },
   {
     id: '03',
-    title: 'Job Application Tracker',
+    title: 'PALACE-A Hotel Booking Website',
     description:
-      'A REST API and dashboard for tracking applications, interview stages, and follow-ups, deployed on Vercel.',
-    stack: ['React', 'Node.js', 'MongoDB'],
+      'A  deployed on Vercel.',
+    stack: ['React', 'JSON','Tailwind','Vercel'],
     live: '#',
     repo: '#',
   },
@@ -119,6 +118,8 @@ function useTypewriter(text, delay = 0, speed = 10) {
 }
 
 // endlessly types + deletes through a list of roles, once `active` is true
+
+
 function useRoleCycler(roles, active) {
   const [roleText, setRoleText] = useState('');
 
@@ -136,7 +137,7 @@ function useRoleCycler(roles, active) {
       const current = roles[r];
 
       if (!deleting) {
-        c++;
+        c++; 
         setRoleText(current.slice(0, c));
         if (c === current.length) {
           deleting = true;
@@ -368,6 +369,7 @@ function Home() {
           </div>
         </nav>
       </header>
+      
 
       {/* ================= HERO ================= */}
       <section id="top" className="hero">
