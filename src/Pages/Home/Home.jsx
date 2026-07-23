@@ -15,9 +15,10 @@ const NAME = 'Roushan Kumar';
 
 const SKILL_GROUPS = [
   { label: 'Frontend', items: ['React', 'JavaScript (ES6+)', 'Tailwind CSS', 'HTML5 / CSS3'] },
-  { label: 'Backend', items: ['Python', 'Django', 'REST APIs'] },
+  { label: 'Backend', items: ['Python', 'Django', 'REST APIs','API Integration'] },
   { label: 'Data', items: ['MySQL'] },
   { label: 'Tooling', items: ['Git & GitHub', 'Vercel', 'Postman'] },
+  { label: 'Authentications', items: ['JWT Tokens', 'CSRF'] },
 ];
 
 const PROJECTS = [
