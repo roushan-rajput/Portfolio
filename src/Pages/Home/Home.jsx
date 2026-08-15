@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import Particles from '../../components/Particles';
+import Particles from '../../Components/Particles';
 import profilePic from '../../assets/profilepic.png';
 import './Home.css';
 
