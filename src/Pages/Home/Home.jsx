@@ -256,9 +256,9 @@ function ProjectCard({ project, growCursor, shrinkCursor }) {
         <a href={project.live} className="link-live">
           Live →
         </a>
-        <a href={project.repo} className="link-code">
+        {/* <a href={project.repo} className="link-code">
           Code →
-        </a>
+        </a> */}
       </div>
     </div>
   );
@@ -540,72 +540,7 @@ function Home() {
             </ul>
           </Reveal>
 
-          <Reveal delay={120}>
-            <form onSubmit={handleFormSubmit} className="contact-form">
-              <span className="corner-tl" />
-              <span className="corner-br" />
-
-              <div className="form-group">
-                <label htmlFor="name">name</label>
-                <input
-                  id="name"
-                  name="name"
-                  value={form.name}
-                  onChange={handleFormChange}
-                  type="text"
-                  required
-                  placeholder="Your name"
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="email">email</label>
-                <input
-                  id="email"
-                  name="email"
-                  value={form.email}
-                  onChange={handleFormChange}
-                  type="email"
-                  required
-                  placeholder="you@example.com"
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="message">message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={form.message}
-                  onChange={handleFormChange}
-                  required
-                  rows={5}
-                  placeholder="What are you building?"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={status === 'sending'}
-                onMouseEnter={growCursor}
-                onMouseLeave={shrinkCursor}
-                className="submit-btn"
-              >
-                {status === 'sending' ? 'Sending…' : 'Send message →'}
-              </button>
-
-              {status === 'sent' && (
-                <p className="form-status success">
-                  Message sent — I&apos;ll get back to you soon.
-                </p>
-              )}
-              {status === 'error' && (
-                <p className="form-status error">
-                  Something went wrong — try again or email me directly.
-                </p>
-              )}
-            </form>
-          </Reveal>
+          
         </div>
       </section>
 
