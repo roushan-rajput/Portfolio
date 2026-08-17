@@ -38,7 +38,7 @@ const PROJECTS = [
     description:
       'A Django + React tool for small retailers to track stock, generate invoices, and see sales trends without spreadsheets',
     stack: ['React', 'Django Channels'],
-    live: '#',
+    live: '',
     repo: '#',
   },
   {
@@ -47,8 +47,8 @@ const PROJECTS = [
     description:
       'A  deployed on Vercel.',
     stack: ['React', 'JSON','Tailwind','Vercel'],
-    live: '#',
-    repo: '#',
+    live: 'https://palace-hotel-liart.vercel.app/',
+    // repo: 'https://palace-a-hotel-booking-website.vercel.app/',
   },
   {
     id: '04',
@@ -56,7 +56,7 @@ const PROJECTS = [
     description:
       'A particle background, custom cursor, and a typewriter hero, built to actually feel finished.',
     stack: ['React', 'Tailwind', 'Vite'],
-    live: '#',
+    live: 'https://portfolio-two-steel-30.vercel.app/',
     repo: '#',
   },
 ];
