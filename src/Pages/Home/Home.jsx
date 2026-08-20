@@ -48,7 +48,7 @@ const PROJECTS = [
       'A  deployed on Vercel.',
     stack: ['React', 'JSON','Tailwind','Vercel'],
     live: 'https://palace-hotel-liart.vercel.app/',
-    // repo: 'https://palace-a-hotel-booking-website.vercel.app/',
+    
   },
   {
     id: '04',
